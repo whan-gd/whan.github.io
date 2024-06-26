@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Welcome to My GitHub Page!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My React App</title>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <p>This is my GitHub Page!</p>
+  <div id="root"></div>
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Define your React component
+    function App() {
+      return (
+        <div>
+          <h1>Hello, world!</h1>
+          <p>This is my React app on GitHub Pages.</p>
+        </div>
+      );
+    }
+
+    // Render the React component to the DOM
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
 </body>
 </html>
