@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My React App</title>
+  <title>My React App with API Call</title>
 </head>
 <body>
   <div id="root"></div>
@@ -13,17 +13,66 @@
   <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    // Define your React component
     function App() {
+      const [username, setUsername] = React.useState('');
+      const [password, setPassword] = React.useState('');
+      const [response, setResponse] = React.useState(null);
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const data = {
+          username: username,
+          password: password
+        };
+
+        fetch('https://sso.test-godaddy.com/v1/api/token', {
+          method: 'POST',
+          headers: {
+            'X-App-Key': 'nucleus_qa',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          setResponse(data);
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      };
+
       return (
         <div>
           <h1>Hello, world!</h1>
-          <p>This is my React app on GitHub Pages.</p>
+          <p>This is my React app with an API call.</p>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>
+                Username:
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+              </label>
+            </div>
+            <div>
+              <label>
+                Password:
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              </label>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+          {response && (
+            <div>
+              <h2>Response:</h2>
+              <pre>{JSON.stringify(response, null, 2)}</pre>
+            </div>
+          )}
         </div>
       );
     }
 
-    // Render the React component to the DOM
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
